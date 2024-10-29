@@ -20,6 +20,7 @@ def run_model(time_record, cells_list, cells_temperatures_init, Temperature_side
 
 def time_step_calc(cells_list, prev_temperatures_list, dt, dx, Heat_flux, k, rho, cp):
     # Equation: dT/dt = alpha * (d2T/dx2 + egen/k)
+    k = k*1000 # convert conductivity to W/(mm*K) to use mm in calculations, because using m in calculations was causing errors
     dTdt_list = np.zeros(len(cells_list)) # initialise as zeros first
     new_temperature_list = np.zeros(len(cells_list))
     dTdx_list = np.zeros(len(cells_list))
