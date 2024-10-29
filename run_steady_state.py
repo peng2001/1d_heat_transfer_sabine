@@ -2,6 +2,7 @@ import toml
 import model_steady_state
 import matplotlib.pyplot as plt
 import numpy as np
+from sympy import symbols, Eq, solve
 
 def config_import(): 
     config_file = "config.toml"
@@ -40,5 +41,12 @@ def config_import():
 if __name__ == "__main__":
     inputs = config_import()
     cell_list = model_steady_state.model_setup(dx=inputs["dx"], thickness=inputs["Thickness"])
-    model_steady_state.run_model(cell_list=cell_list, k=inputs["Conductivity"], dx=inputs["dx"], T_amb=inputs["Temperature_ambient"]+273.15)
-    print(cell_list[-1].x)
+    model_steady_state.setup_equations(cell_list=cell_list, k=inputs["Conductivity"], dx=inputs["dx"], T_amb=inputs["Temperature_ambient"]+273.15)
+    solution = model_steady_state.solve_equations(cell_list)
+    print(solution)
+    # for key in solution:
+    #     if key == "T_0.1":
+    #         print("AAAAAAAAA")
+    #     print(key)
+    # for cell in cell_list:
+    #     print(cell.x)
