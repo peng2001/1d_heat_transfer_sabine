@@ -2,6 +2,7 @@
 dt = 1                        # seconds, time step of simulation (not used for steady state simulation)
 total_time = 1000               # seconds, total time simulated (not used for steady state simulation)
 dx = 0.005                      # meters, discretisation of cell in 1D
+
 # Cell parameters
 Thickness = 0.2                 # metres, thickness of cell to simulate; thickness = 2*L
 Specific_heat = 1000            # J/(kg*K), specific heat of cell
@@ -13,4 +14,7 @@ Temperature_initial = 25        # Deg C, uniform starting temperature of cell an
 Heat_gen = 0                    # Watts/m, uniform heat generation by cell
 Temperature_side_minusL = 20    # Deg C, temperature applied at x = -L 
 Temperature_side_plusL = 20     # Deg C, temperature applied at x = L
+
+Temperature_ambient = 25        # Deg C, ambient temperature, used for convection calculations
+Convection_coefficient = 10     # W/(m^2*kg)
 
