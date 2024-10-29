@@ -29,11 +29,10 @@ def graphing_steady_state(temperatures_list, time_record, cells_list):
 if __name__ == "__main__":
     inputs = config_import()
     dx_precise = np.float64(inputs["dx"])
-    k_mm = inputs["Conductivity"]*1000 # convert conductivity to W/(mm*K) to use mm in calculations, because using m in calculations was causing errors
     time_record, cells_list, cells_temperatures_init = model.model_setup(dx = dx_precise, dt = inputs["dt"], total_time = inputs["total_time"], temperature_initial = inputs["Temperature_initial"]+273.15, thickness = inputs["Thickness"])
     temperatures = model.run_model(time_record=time_record, cells_list=cells_list, cells_temperatures_init=cells_temperatures_init,
                                     Temperature_side_minusL=inputs["Temperature_side_minusL"]+273.15, Temperature_side_plusL=inputs["Temperature_side_plusL"]+273.15, 
-                                    dt=inputs["dt"], dx=dx_precise, Heat_flux=inputs["Heat_flux"], k=k_mm, rho=inputs["Density"], cp=inputs["Specific_heat"])
+                                    dt=inputs["dt"], dx=dx_precise, Heat_flux=inputs["Heat_flux"], k=inputs["Conductivity"], rho=inputs["Density"], cp=inputs["Specific_heat"])
     temperatures_C = [[value - 273.15 for value in sublist] for sublist in temperatures] # subtract 273.15 from all points to convert to deg C
     print("Avg final temperature: "+str(round(np.mean(temperatures_C[-1]), 4))+" Degrees C")
     print("Max final temperature: "+str(round(max(temperatures_C[-1]), 4))+" Degrees C")
