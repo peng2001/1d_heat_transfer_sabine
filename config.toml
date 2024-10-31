@@ -11,9 +11,9 @@ Density = 30                    # kg/m^3, weight density; used to calculate diff
 
 # Heat parameters
 Temperature_initial = 25        # Deg C, uniform starting temperature of cell and boundaries
-Heat_flux_left = 100            # Watts/(m^2), heat in at x = -L surface
-Heat_flux_right = 100            # Watts/(m^2), heat in at x = L surface
-Heat_flux = 100 # temporary; delete later
-Heat_loss = 10                  # Watts, total heat loss in system
+Heat_flux_left = 100            # Watts/(m^2), heat in from peltier at x = -L surface
+Heat_flux_right = 100           # Watts/(m^2), heat in from peltier at x = L surface
+Heat_gen = 0                    # W/m internal heat generation 
+Heat_loss = 10                  # Watts, total heat loss in system, will be split equally throughout the cells in the model
 Temperature_side_minusL = 20    # Deg C, temperature applied at x = -L 
 Temperature_side_plusL = 20     # Deg C, temperature applied at x = L

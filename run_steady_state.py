@@ -1,13 +1,7 @@
-import toml
 import model
 import matplotlib.pyplot as plt
 import numpy as np
-
-def config_import(): 
-    config_file = "config.toml"
-    with open(config_file, 'r') as f:
-        inputs = toml.load(f)
-    return inputs
+from import_config import *
 
 def graphing_steady_state(temperatures_list, time_record, cells_list):
     x = np.array(cells_list)
@@ -25,22 +19,20 @@ def graphing_steady_state(temperatures_list, time_record, cells_list):
     ax.set_title('1D Temperature')
     plt.show()
 
-def calculate_dTdt(temperatures_list, dt):
+def calculate_dTdt(temperatures_list):
     # calculates dT/dt at centre of model to make sure that steady state is reached
-    mid_index = len(temperatures_list[0]) // 2
-    dTdt = (temperatures_list[-1][mid_index] - temperatures_list[-2][mid_index])/dt
-    return dTdt
+    dTdt_list = []
+    for index, cell in enumerate(temperatures_list[0]):
+        dTdt = (temperatures_list[-1][index] - temperatures_list[-2][index])/dt
+        dTdt_list.append(dTdt)
+    return max(dTdt_list)
         
 if __name__ == "__main__":
-    inputs = config_import()
-    dx_precise = np.float64(inputs["dx"])
-    time_record, cells_list, cells_temperatures_init = model.model_setup(dx = dx_precise, dt = inputs["dt"], total_time = inputs["total_time"], temperature_initial = inputs["Temperature_initial"]+273.15, thickness = inputs["Thickness"])
-    temperatures = model.run_model(time_record=time_record, cells_list=cells_list, cells_temperatures_init=cells_temperatures_init,
-                                    Temperature_side_minusL=inputs["Temperature_side_minusL"]+273.15, Temperature_side_plusL=inputs["Temperature_side_plusL"]+273.15, 
-                                    dt=inputs["dt"], dx=dx_precise, Heat_flux=inputs["Heat_flux"], k=inputs["Conductivity"], rho=inputs["Density"], cp=inputs["Specific_heat"])
+    time_record, cells_list, cells_temperatures_init = model.model_setup()
+    temperatures = model.run_model(time_record=time_record, cells_list=cells_list, cells_temperatures_init=cells_temperatures_init)
     temperatures_C = [[value - 273.15 for value in sublist] for sublist in temperatures] # subtract 273.15 from all points to convert to deg C
     print("Avg final temperature: "+str(round(np.mean(temperatures_C[-1]), 4))+" Degrees C")
     print("Max final temperature: "+str(round(max(temperatures_C[-1]), 4))+" Degrees C")
     print("Min final temperature: "+str(round(min(temperatures_C[-1]), 4))+" Degrees C")
-    print("Final centre dT/dt: "+str(calculate_dTdt(temperatures_list=temperatures_C, dt=inputs["dt"]))) # should be very small; otherwise increase simulation time
+    print("Max centre dT/dt: "+str(calculate_dTdt(temperatures_list=temperatures_C))) # should be very small; otherwise increase simulation time
     graphing_steady_state(temperatures_C, time_record, cells_list)
