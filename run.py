@@ -1,7 +1,7 @@
 import model
 import matplotlib.pyplot as plt
 import numpy as np
-from import_config import *
+from setup import *
 
 def graphing_steady_state(temperatures_list, time_record, cells_list):
     x = np.array(cells_list)
@@ -16,6 +16,23 @@ def graphing_steady_state(temperatures_list, time_record, cells_list):
     # Adding axis labels
     ax.set_xlabel('x (mm)')
     ax.set_ylabel('Temperature (Degres C)')
+    ax.set_title('1D Temperature')
+    plt.show()
+
+def graphing_transient(temperatures_list, time_record, cells_list):
+    x = np.array(cells_list)
+    t = np.array(time_record)
+    temperature_data = np.array(temperatures_list)
+    x, t = np.meshgrid(x, t)
+    # Flatten the data for plotting
+    # Plotting the data
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_surface(x, t, temperature_data, cmap='viridis')
+    # Adding axis labels
+    ax.set_xlabel('x (m)')
+    ax.set_ylabel('Time (s)')
+    ax.set_zlabel('Temperature (Degrees C)')
     ax.set_title('1D Temperature')
     plt.show()
 
@@ -36,3 +53,4 @@ if __name__ == "__main__":
     print("Min final temperature: "+str(round(min(temperatures_C[-1]), 4))+" Degrees C")
     print("Max centre dT/dt: "+str(calculate_dTdt(temperatures_list=temperatures_C))) # should be very small; otherwise increase simulation time
     graphing_steady_state(temperatures_C, time_record, cells_list)
+    graphing_transient(temperatures_C, time_record, cells_list)

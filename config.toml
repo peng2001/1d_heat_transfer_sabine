@@ -1,6 +1,6 @@
 # Simulation Setup
 dt = 1                          # seconds, time step of simulation
-total_time = 10000               # seconds, total time simulated (choose large value for steady state simulation; make sure dT/dt is very small)
+total_time = 50000               # seconds, total time simulated (choose large value for steady state simulation; make sure dT/dt is very small)
 dx = 0.2                        # mm, discretisation of cell in 1D
 
 # Cell parameters
@@ -11,9 +11,8 @@ Density = 30                    # kg/m^3, weight density; used to calculate diff
 
 # Heat parameters
 Temperature_initial = 25        # Deg C, uniform starting temperature of cell and boundaries
-Heat_flux_left = 100            # Watts/(m^2), heat in from peltier at x = -L surface
-Heat_flux_right = 100           # Watts/(m^2), heat in from peltier at x = L surface
+Heat_flux_left = 1            # Watts/(m^2), heat in from peltier at x = -L surface
+Heat_flux_right = 1           # Watts/(m^2), heat in from peltier at x = L surface
 Heat_gen = 0                    # W/m internal heat generation 
-Heat_loss = 10                  # Watts, total heat loss in system, will be split equally throughout the cells in the model
-Temperature_side_minusL = 20    # Deg C, temperature applied at x = -L 
-Temperature_side_plusL = 20     # Deg C, temperature applied at x = L
+Total_heat_loss = 0           # Watts, total heat loss in system, will be split equally throughout the cells in the model
+Temperature_ambient = 25        # Deg C, temperature of air
