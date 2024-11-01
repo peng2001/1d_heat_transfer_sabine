@@ -11,8 +11,8 @@ Density = 30                            # kg/m^3, weight density; used to calcul
 
 # Heat parameters
 Temperature_initial = 25                # Deg C, uniform starting temperature of cell and boundaries
-Heat_flux_left = -20                     # Watts/(m^2), heat in from peltier at x = -L surface
-Heat_flux_right = 25                     # Watts/(m^2), heat in from peltier at x = L surface
-Total_heat_gen = 15                      # Watts/(m^2), total internal heat generation (per area because of 1D model), will be equally distributed in the model 
+Heat_flux_left = -20                    # Watts/(m^2), heat in from peltier at x = -L surface
+Heat_flux_right = 25                    # Watts/(m^2), heat in from peltier at x = L surface
+Total_heat_gen = 15                     # Watts/(m^2), total internal heat generation (per area because of 1D model), will be equally distributed in the model 
 Heat_loss_heat_transfer_coefficient = 5 # Watts/(m^2*K), total heat loss in system (per area because of 1D model), will be equally distributed in the model (should be negative)
 Temperature_ambient = 25                # Deg C, used for calculating heat loss
