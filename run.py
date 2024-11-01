@@ -36,7 +36,7 @@ def graphing_transient(temperatures_list, time_record, cells_list):
     ax.set_title('1D Temperature')
     plt.show()
 
-def calculate_dTdt(temperatures_list):
+def calculate_max_dTdt(temperatures_list):
     # calculates dT/dt at centre of model to make sure that steady state is reached
     dTdt_list = []
     for index, cell in enumerate(temperatures_list[0]):
@@ -51,6 +51,9 @@ if __name__ == "__main__":
     print("Avg final temperature: "+str(round(np.mean(temperatures_C[-1]), 4))+" Degrees C")
     print("Max final temperature: "+str(round(max(temperatures_C[-1]), 4))+" Degrees C")
     print("Min final temperature: "+str(round(min(temperatures_C[-1]), 4))+" Degrees C")
-    print("Max centre dT/dt: "+str(calculate_dTdt(temperatures_list=temperatures_C))) # should be very small; otherwise increase simulation time
+    max_dTdt = calculate_max_dTdt(temperatures_list=temperatures_C)
+    print("Max final dT/dt: "+str(max_dTdt)) # should be very small; otherwise increase simulation time
+    if max_dTdt > 0.00001:
+        print("Steady state not reached, try increasing simulation time")
     graphing_steady_state(temperatures_C, time_record, cells_list)
     graphing_transient(temperatures_C, time_record, cells_list)

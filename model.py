@@ -8,11 +8,12 @@ def model_setup():
     cells_temperatures_init = np.zeros(len(cells_list))+Temperature_initial # initial list of cell temperatures
     return time_record, cells_list, cells_temperatures_init
 
-# def calculate_boundary_temperatures(prev_temperatures_list):
-#     # heat_flux = k*(T)
-#     left_bounds_temperature = 
+def calculate_heat_loss(cell_temperature):
+    heat_loss = (cell_temperature - Temperature_ambient)*Heat_loss_heat_transfer_coefficient
+    return(heat_loss)
 
 def time_step_calc(cells_list, prev_temperatures_list):
+    system_total_q = 0
     # Equation: dT/dt = alpha * (d2T/dx2 + egen/k)
     k = Conductivity*1000 # convert conductivity to W/(mm*K) to use mm in calculations, because using m in calculations was causing errors
     dTdt_list = np.zeros(len(cells_list)) # initialise as zeros first
@@ -45,15 +46,20 @@ def time_step_calc(cells_list, prev_temperatures_list):
     for cell_index, cell_location in enumerate(cells_list):
         #### EGEN FUNCTION HERE
         # calculating heat input: add heat gen, heat from peltier (for border cells), and subtract heat loss
+        heat_loss = calculate_heat_loss(prev_temperatures_list[cell_index])
         if cell_index == 0:
-            egen = (Heat_gen - (Total_heat_loss/Thickness))*dx + Heat_flux_left # heat gen minus heat loss multiplied by dx to get discretised value, plus heat flux in
+            egen = ((Total_heat_gen)/Thickness - heat_loss)*dx + Heat_flux_left # heat gen minus heat loss multiplied by dx to get discretised value, plus heat flux in
+            system_total_q + egen
         elif cell_index == range(len(cells_list))[-1]:
-            egen = (Heat_gen - (Total_heat_loss/Thickness))*dx + Heat_flux_right
+            egen = ((Total_heat_gen)/Thickness - heat_loss)*dx + Heat_flux_right
+            system_total_q + egen
         else:
-            egen = (Heat_gen - (Total_heat_loss/Thickness))*dx
+            egen = ((Total_heat_gen)/Thickness - heat_loss)*dx
+            system_total_q + egen
         dTdt_list[cell_index] = alpha*(d2Tdx2_list[cell_index]+egen/k)
         # dTdt_list[0] = 0; dTdt_list[-1] = 0 # commented out because this is only used for setting constant surface temperature
         new_temperature_list[cell_index] = prev_temperatures_list[cell_index] + dTdt_list[cell_index]*dt
+    # print("Time step total system q: "+str(system_total_q))
     return new_temperature_list
 
 def run_model(time_record, cells_list, cells_temperatures_init):
@@ -63,7 +69,6 @@ def run_model(time_record, cells_list, cells_temperatures_init):
         if time_index == 0:
             continue # do nothing at zeroth time step
         temperatures[time_index] = time_step_calc(cells_list = cells_list, prev_temperatures_list = temperatures[time_index-1])
-    print(temperatures[0])
     return temperatures
         
 

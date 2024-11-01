@@ -5,6 +5,7 @@
 - Discretised in x and in time
 
 - Graphs temperature as a function of x and time
+- Steady state values determined by running really long simulation
 
 ## To Run Model:
 - Run ```python run.py``` to run model and graph

@@ -1,18 +1,18 @@
 # Simulation Setup
-dt = 1                          # seconds, time step of simulation
-total_time = 50000               # seconds, total time simulated (choose large value for steady state simulation; make sure dT/dt is very small)
-dx = 0.2                        # mm, discretisation of cell in 1D
+dt = 2                                  # seconds, time step of simulation
+total_time = 100000                        # seconds, total time simulated (choose large value for steady state simulation; make sure dT/dt is very small)
+dx = 1                                  # mm, discretisation of cell in 1D
 
 # Cell parameters
-Thickness = 20                  # mm, thickness of cell to simulate; thickness = 2*L
-Specific_heat = 1000            # J/(kg*K), specific heat of cell
-Conductivity = 0.5              # W/(m*K), through-plane conductivity of cell
-Density = 30                    # kg/m^3, weight density; used to calculate diffusivity (diffusivity = conductivity/(density*specificheat))
+Thickness = 20                          # mm, thickness of cell to simulate; thickness = 2*L
+Specific_heat = 1000                    # J/(kg*K), specific heat of cell
+Conductivity = 0.5                      # W/(m*K), through-plane conductivity of cell
+Density = 30                            # kg/m^3, weight density; used to calculate diffusivity (diffusivity = conductivity/(density*specificheat))
 
 # Heat parameters
-Temperature_initial = 25        # Deg C, uniform starting temperature of cell and boundaries
-Heat_flux_left = 1            # Watts/(m^2), heat in from peltier at x = -L surface
-Heat_flux_right = 1           # Watts/(m^2), heat in from peltier at x = L surface
-Heat_gen = 0                    # W/m internal heat generation 
-Total_heat_loss = 0           # Watts, total heat loss in system, will be split equally throughout the cells in the model
-Temperature_ambient = 25        # Deg C, temperature of air
+Temperature_initial = 25                # Deg C, uniform starting temperature of cell and boundaries
+Heat_flux_left = -20                     # Watts/(m^2), heat in from peltier at x = -L surface
+Heat_flux_right = 25                     # Watts/(m^2), heat in from peltier at x = L surface
+Total_heat_gen = 15                      # Watts/(m^2), total internal heat generation (per area because of 1D model), will be equally distributed in the model 
+Heat_loss_heat_transfer_coefficient = 5 # Watts/(m^2*K), total heat loss in system (per area because of 1D model), will be equally distributed in the model (should be negative)
+Temperature_ambient = 25                # Deg C, used for calculating heat loss
