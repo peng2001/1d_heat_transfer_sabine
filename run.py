@@ -15,7 +15,7 @@ def graphing_steady_state(temperatures_list, time_record, cells_list):
     ax.plot(x[-1], temperature_data[-1])
     # Adding axis labels
     ax.set_xlabel('x (mm)')
-    ax.set_ylabel('Temperature (Degres C)')
+    ax.set_ylabel('Steady State Temperature (Degres C)')
     ax.set_title('1D Temperature')
     plt.show()
 
