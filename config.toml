@@ -1,6 +1,6 @@
 # Simulation Setup
 dt = 2                                  # seconds, time step of simulation
-total_time = 100000                        # seconds, total time simulated (choose large value for steady state simulation; make sure dT/dt is very small)
+total_time = 100000                     # seconds, total time simulated (choose large value for steady state simulation; make sure dT/dt is very small)
 dx = 1                                  # mm, discretisation of cell in 1D
 
 # Cell parameters
