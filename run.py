@@ -52,7 +52,7 @@ if __name__ == "__main__":
     print("Max final temperature: "+str(round(max(temperatures_C[-1]), 4))+" Degrees C")
     print("Min final temperature: "+str(round(min(temperatures_C[-1]), 4))+" Degrees C")
     max_dTdt = calculate_max_dTdt(temperatures_list=temperatures_C)
-    print("Max final dT/dt: "+str(max_dTdt)) # should be very small; otherwise increase simulation time
+    print("Max final dT/dt (should be very small to reach steady state): "+str(max_dTdt)) # should be very small; otherwise increase simulation time
     if max_dTdt > 0.00001:
         print("Steady state not reached, try increasing simulation time")
     graphing_steady_state(temperatures_C, time_record, cells_list)
