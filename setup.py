@@ -6,11 +6,14 @@ with open(config_file, 'r') as f:
 
 dt = inputs["dt"]
 total_time = inputs["total_time"]
-dx = inputs["dx"]
+n = inputs["n"]
 Thickness = inputs["Thickness"]
+dx = Thickness/n
 Specific_heat = inputs["Specific_heat"]
 Conductivity = inputs["Conductivity"]
 Density = inputs["Density"]
+Thickness_interface = inputs["Thermal_Interface_Thickness"]
+Conductivity_interface = inputs["Thermal_Interface_Conductivity"]
 Temperature_initial = inputs["Temperature_initial"]+273.15
 Heat_flux_left = inputs["Heat_flux_left"]
 Heat_flux_right = inputs["Heat_flux_right"]
