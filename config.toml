@@ -1,11 +1,11 @@
 # Simulation Setup
-dt = 1                                 # seconds, time step of simulation
-total_time = 10000                   # seconds, total time simulated (choose large value for steady state simulation; make sure dT/dt is very small)
-n = 100                                 # number of discretised points in 1D
-dx_thermal_interface = 0.1              # mm, discretisation of thermal interface in 1D, use smaller value than cell dx for more precision
+dt = 0.025                              # seconds, time step of simulation; if overflow error is occurring, use smaller dt
+total_time = 1000                      # seconds, total time simulated (choose large value for steady state simulation; make sure final dT/dt is very small)
+n = 150                                 # number of discretised points in 1D, choose around 200 or more for convergence
+n_thermal_interface = 20                # number of discretised points of thermal interface in 1D, different value is used from cell because thermal interface is much thinner
 
 # Cell parameters
-Thickness = 0.05                        # m, thickness of cell to model; thickness = 2*L
+Thickness = 0.01                        # m, thickness of cell to model; thickness = 2*L
 Specific_heat = 1000                    # J/(kg*K), specific heat of cell
 Conductivity = 0.5                      # W/(m*K), through-plane thermal conductivity of cell
 Density = 2000                          # kg/m^3, weight density; used to calculate diffusivity (diffusivity = conductivity/(density*specificheat))
@@ -16,8 +16,8 @@ Thermal_Interface_Conductivity = 1.4    # W/(m*K), conductivity of heat flux sen
 
 # Heat parameters
 Temperature_initial = 25                # Deg C, uniform starting temperature of cell and boundaries
-Heat_flux_left = -1                     # Watts/(m^2), heat in from peltier at x = -L surface
-Heat_flux_right = -1                    # Watts/(m^2), heat in from peltier at x = L surface
-Total_heat_gen = 1000                   # Watts/(m^2), total internal heat generation (per area because of 1D model), will be equally distributed in the model 
-Heat_loss_heat_transfer_coefficient = 5 # Watts/(m^2*K), total heat loss in system (per area because of 1D model), will be equally distributed in the model (should be negative)
+Heat_flux_left = 10                     # Watts/(m^2), heat in from peltier at x = -L surface
+Heat_flux_right = -20                   # Watts/(m^2), heat in from peltier at x = L surface
+Total_heat_gen = 30                     # Watts/(m^2), total internal heat generation (per area because of 1D model), will be equally distributed in the model 
+Heat_loss_heat_transfer_coefficient = 50000 # Watts/(m^2*K), total heat loss in system (per area because of 1D model), will be equally distributed in the model (should be negative)
 Temperature_ambient = 25                # Deg C, used for calculating heat loss

@@ -1,6 +1,5 @@
 import model
 import matplotlib.pyplot as plt
-import numpy as np
 from setup import *
 
 def graphing_steady_state(temperatures_list, time_record, cells_list):
@@ -71,5 +70,5 @@ if __name__ == "__main__":
     if max_dTdt > 0.00001:
         print("Steady state not reached, try increasing simulation time")
     graphing_steady_state(temperatures_C, time_record, cells_list)
-    graphing_transient(temperatures_C, time_record, cells_list)
+    # graphing_transient(temperatures_C, time_record, cells_list)
     graphing_transient_2D(temperatures_C, time_record, cells_list)

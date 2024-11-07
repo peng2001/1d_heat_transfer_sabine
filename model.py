@@ -1,4 +1,3 @@
-import numpy as np
 from setup import *
 
 def model_setup():
@@ -9,7 +8,8 @@ def model_setup():
     return time_record, cells_list, cells_temperatures_init
 
 def calculate_heat_loss(cell_temperature): # per length
-    heat_loss = (cell_temperature - Temperature_ambient)*Heat_loss_heat_transfer_coefficient*dx
+    # print(str(cell_temperature)+", "+str(Temperature_ambient))
+    heat_loss = (cell_temperature - Temperature_ambient)*Heat_loss_heat_transfer_coefficient
     # print(heat_loss)
     return(heat_loss)
 
@@ -49,13 +49,13 @@ def time_step_calc(cells_list, prev_temperatures_list):
         # calculating heat input: add heat gen, heat from peltier (for border cells), and subtract heat loss
         heat_loss = calculate_heat_loss(prev_temperatures_list[cell_index])
         if cell_index == 0:
-            egen = ((Total_heat_gen)/Thickness)*dx - heat_loss + Heat_flux_left # heat gen minus heat loss multiplied by dx to get discretised value, plus heat flux in
+            egen = (Total_heat_gen/Thickness) - heat_loss + Heat_flux_left # heat gen minus heat loss multiplied by dx to get discretised value, plus heat flux in
             system_total_q += egen
         elif cell_index == range(len(cells_list))[-1]:
-            egen = ((Total_heat_gen)/Thickness)*dx - heat_loss + Heat_flux_right
+            egen = (Total_heat_gen/Thickness) - heat_loss + Heat_flux_right
             system_total_q += egen
         else:
-            egen = ((Total_heat_gen)/Thickness)*dx - heat_loss
+            egen = (Total_heat_gen/Thickness) - heat_loss
             system_total_q += egen
         # print(egen)
         dTdt_list[cell_index] = alpha*(d2Tdx2_list[cell_index]+egen/k)
