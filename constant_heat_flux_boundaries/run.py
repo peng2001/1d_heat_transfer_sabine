@@ -1,6 +1,5 @@
 import model
 import matplotlib.pyplot as plt
-import numpy as np
 from setup import *
 
 def graphing_steady_state(temperatures_list, time_record, cells_list):
@@ -36,6 +35,21 @@ def graphing_transient(temperatures_list, time_record, cells_list):
     ax.set_title('1D Temperature')
     plt.show()
 
+def graphing_transient_2D(temperatures_list, time_record, cells_list): # graphs temperature over time of one x=-L surface
+    x = np.array(cells_list)
+    t = np.array(time_record)
+    temperature_data = np.array(temperatures_list)
+    left_surface_temperature = [sublist[0] for sublist in temperature_data]
+    # Plotting the data
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(t, left_surface_temperature)
+    # Adding axis labels
+    ax.set_xlabel('Time (s)')
+    ax.set_ylabel('Temperature (Degrees C)')
+    ax.set_title('Temperature of Left Surface of Cell')
+    plt.show()
+
 def calculate_max_dTdt(temperatures_list):
     # calculates dT/dt at centre of model to make sure that steady state is reached
     dTdt_list = []
@@ -57,3 +71,4 @@ if __name__ == "__main__":
         print("Steady state not reached, try increasing simulation time")
     graphing_steady_state(temperatures_C, time_record, cells_list)
     # graphing_transient(temperatures_C, time_record, cells_list)
+    graphing_transient_2D(temperatures_C, time_record, cells_list)
