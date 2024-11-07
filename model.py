@@ -1,21 +1,22 @@
-import numpy as np
 from setup import *
 
 def model_setup():
     time_record = np.arange(0, total_time+dt, dt)
     L = Thickness/2
-    cells_list = np.arange(-L,L+dx/2,dx) # positions of discretised cells in model
+    cells_list = np.linspace(-L,L+dx/2,n) # positions of discretised cells in model
     cells_temperatures_init = np.zeros(len(cells_list))+Temperature_initial # initial list of cell temperatures
     return time_record, cells_list, cells_temperatures_init
 
-def calculate_heat_loss(cell_temperature):
+def calculate_heat_loss(cell_temperature): # per length
+    # print(str(cell_temperature)+", "+str(Temperature_ambient))
     heat_loss = (cell_temperature - Temperature_ambient)*Heat_loss_heat_transfer_coefficient
+    # print(heat_loss)
     return(heat_loss)
 
 def time_step_calc(cells_list, prev_temperatures_list):
     system_total_q = 0
     # Equation: dT/dt = alpha * (d2T/dx2 + egen/k)
-    k = Conductivity*1000 # convert conductivity to W/(mm*K) to use mm in calculations, because using m in calculations was causing errors
+    k = Conductivity # convert conductivity to W/(mm*K) to use mm in calculations, because using m in calculations was causing errors
     dTdt_list = np.zeros(len(cells_list)) # initialise as zeros first
     new_temperature_list = np.zeros(len(cells_list))
     dTdx_list = np.zeros(len(cells_list))
@@ -48,14 +49,15 @@ def time_step_calc(cells_list, prev_temperatures_list):
         # calculating heat input: add heat gen, heat from peltier (for border cells), and subtract heat loss
         heat_loss = calculate_heat_loss(prev_temperatures_list[cell_index])
         if cell_index == 0:
-            egen = ((Total_heat_gen)/Thickness - heat_loss)*dx + Heat_flux_left # heat gen minus heat loss multiplied by dx to get discretised value, plus heat flux in
-            system_total_q + egen
+            egen = (Total_heat_gen/Thickness) - heat_loss + Heat_flux_left # heat gen minus heat loss multiplied by dx to get discretised value, plus heat flux in
+            system_total_q += egen
         elif cell_index == range(len(cells_list))[-1]:
-            egen = ((Total_heat_gen)/Thickness - heat_loss)*dx + Heat_flux_right
-            system_total_q + egen
+            egen = (Total_heat_gen/Thickness) - heat_loss + Heat_flux_right
+            system_total_q += egen
         else:
-            egen = ((Total_heat_gen)/Thickness - heat_loss)*dx
-            system_total_q + egen
+            egen = (Total_heat_gen/Thickness) - heat_loss
+            system_total_q += egen
+        # print(egen)
         dTdt_list[cell_index] = alpha*(d2Tdx2_list[cell_index]+egen/k)
         # dTdt_list[0] = 0; dTdt_list[-1] = 0 # commented out because this is only used for setting constant surface temperature
         new_temperature_list[cell_index] = prev_temperatures_list[cell_index] + dTdt_list[cell_index]*dt
