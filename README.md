@@ -8,7 +8,7 @@
 - Steady state values determined by running really long simulation
 
 ## To Run Model:
-- Run ```python run.py``` to run model and graph
+- Run run.py in either folder, or run ```python main.py temp``` or ```python main.py heat_flux``` to run model and graph
 - Configure model by editing config.toml in text editor
 - Packages required: numpy, toml
 
@@ -20,3 +20,4 @@
 - Access the simulation results data in ```temperatures_C``` variable in the main code in run.py
   - For example, ```temperatures_C[3][7]``` is the 3rd time step, at the 7th discretised x distance
 - Model uses x=0 as center point of plane
+- Model using constant heat flux boundaries is not fully working
