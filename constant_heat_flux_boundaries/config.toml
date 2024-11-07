@@ -10,7 +10,7 @@ Specific_heat = 1000                    # J/(kg*K), specific heat of cell
 Conductivity = 0.5                      # W/(m*K), through-plane thermal conductivity of cell
 Density = 2000                          # kg/m^3, weight density; used to calculate diffusivity (diffusivity = conductivity/(density*specificheat))
 
-# Sensor parameters (and thermal interface material)
+# Sensor parameters (and thermal interface material) (not used right now)
 Thermal_Interface_Thickness = 2         # mm, thickness of thermal interface material to model
 Thermal_Interface_Conductivity = 1.4    # W/(m*K), conductivity of heat flux sensor and thermal interface material
 
