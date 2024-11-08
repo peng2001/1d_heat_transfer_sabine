@@ -3,7 +3,8 @@ from setup import *
 def model_setup():
     time_record = np.arange(0, total_time+dt, dt)
     L = Thickness/2
-    cells_list = np.linspace(-L,L+dx/2,n) # positions of discretised cells in model
+    cells_list = np.linspace(-L,L,n) # positions of discretised cells in model
+    print(cells_list)
     cells_temperatures_init = np.zeros(len(cells_list))+Temperature_initial # initial list of cell temperatures
     return time_record, cells_list, cells_temperatures_init
 
