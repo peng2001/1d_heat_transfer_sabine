@@ -6,6 +6,7 @@
 
 - Graphs temperature as a function of x and time
 - Steady state values determined by running really long simulation
+- Two boundary condition options: constant heat flux or constant temperature
 
 ## To Run Model:
 - Run run.py in either folder, or run ```python main.py temp``` or ```python main.py heat_flux``` to run model and graph
