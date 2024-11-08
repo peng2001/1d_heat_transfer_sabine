@@ -1,7 +1,7 @@
 import toml
 import numpy as np
 
-config_file = "config.toml"
+config_file = "constant_heat_flux_boundaries/config.toml"
 with open(config_file, 'r') as f:
     inputs = toml.load(f)
 

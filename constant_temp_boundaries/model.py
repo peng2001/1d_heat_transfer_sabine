@@ -47,7 +47,7 @@ def time_step_calc(cells_list, prev_temperatures_list):
     for cell_index, cell_location in enumerate(cells_list):
         #### EGEN FUNCTION HERE
         # calculating heat input: add heat gen, heat from peltier (for border cells), and subtract heat loss
-        heat_loss = calculate_heat_loss(prev_temperatures_list[cell_index])
+        heat_loss = calculate_heat_loss(prev_temperatures_list[cell_index])/dx # divide by dx because heat gen term should be in terms of W/m^3
         if cell_index == 0:
             egen = (Total_heat_gen/Thickness) - heat_loss # heat gen minus heat loss multiplied by dx to get discretised value, plus heat flux in
             system_total_q += egen

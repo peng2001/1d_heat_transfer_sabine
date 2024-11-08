@@ -1,6 +1,6 @@
 # Simulation Setup
 dt = 0.025                              # seconds, time step of simulation; if overflow error is occurring, use smaller dt
-total_time = 1000                      # seconds, total time simulated (choose large value for steady state simulation; make sure final dT/dt is very small)
+total_time = 1500                      # seconds, total time simulated (choose large value for steady state simulation; make sure final dT/dt is very small)
 n = 150                                 # number of discretised points in 1D, choose around 200 or more for convergence
 n_thermal_interface = 20                # number of discretised points of thermal interface in 1D, different value is used from cell because thermal interface is much thinner
 
@@ -16,8 +16,8 @@ Thermal_Interface_Conductivity = 1.4    # W/(m*K), conductivity of heat flux sen
 
 # Heat parameters
 Temperature_initial = 25                # Deg C, uniform starting temperature of cell and boundaries
-Heat_flux_left = 10                     # Watts/(m^2), heat in from peltier at x = -L surface
-Heat_flux_right = -20                   # Watts/(m^2), heat in from peltier at x = L surface
-Total_heat_gen = 30                     # Watts/(m^2), total internal heat generation (per area because of 1D model), will be equally distributed in the model 
-Heat_loss_heat_transfer_coefficient = 50000 # Watts/(m^2*K), total heat loss in system (per area because of 1D model), will be equally distributed in the model (should be negative)
+Heat_flux_left = 300                    # Watts/(m^2), heat in from peltier at x = -L surface
+Heat_flux_right = -700                  # Watts/(m^2), heat in from peltier at x = L surface
+Total_heat_gen = 70                     # Watts/(m^2), total internal heat generation (per area because of 1D model), will be equally distributed in the model 
+Heat_loss_heat_transfer_coefficient = 1 # Watts/(m^2*K), total heat loss in system (per area because of 1D model), will be equally distributed in the model (should be negative)
 Temperature_ambient = 25                # Deg C, used for calculating heat loss
