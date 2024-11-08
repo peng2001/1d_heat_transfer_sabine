@@ -4,6 +4,9 @@ def model_setup():
     time_record = np.arange(0, total_time+dt, dt)
     L = Thickness/2
     cells_list = np.linspace(-L,L,n) # positions of discretised cells in model
+    left_interface_list = np.linspace(-L-Thickness_interface, cells_list[0], num=n+1, endpoint=True).tolist()
+    right_interface_list = np.linspace(cells_list[-1], L+Thickness_interface, num=n+1, endpoint=True)[1:].tolist()
+    cells_list = np.concatenate((left_interface_list, cells_list, right_interface_list))
     print(cells_list)
     cells_temperatures_init = np.zeros(len(cells_list))+Temperature_initial # initial list of cell temperatures
     return time_record, cells_list, cells_temperatures_init
