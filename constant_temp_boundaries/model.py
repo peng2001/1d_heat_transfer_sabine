@@ -3,7 +3,7 @@ from setup import *
 def model_setup():
     time_record = np.arange(0, total_time+dt, dt)
     L = Thickness/2
-    cells_list = np.linspace(-L,L,n) # positions of discretised cells in model, excluding thermal interface layer
+    cells_list = np.linspace(-L-Thickness_interface,L+Thickness_interface,n) # positions of discretised points in model, including thermal interface
     cells_temperatures_init = np.zeros(len(cells_list))+Temperature_initial # initial list of cell temperatures
     return time_record, cells_list, cells_temperatures_init
 
@@ -14,7 +14,6 @@ def calculate_heat_loss(cell_temperature): # per length
     return(heat_loss)
 
 def time_step_calc(cells_list, prev_temperatures_list):
-    system_total_q = 0
     # Equation: dT/dt = alpha * (d2T/dx2 + egen/k)
     k = Conductivity # convert conductivity to W/(mm*K) to use mm in calculations, because using m in calculations was causing errors
     dTdt_list = np.zeros(len(cells_list)) # initialise as zeros first
@@ -22,6 +21,8 @@ def time_step_calc(cells_list, prev_temperatures_list):
     dTdx_list = np.zeros(len(cells_list))
     d2Tdx2_list = np.zeros(len(cells_list))
     alpha = k/(Density*Specific_heat) # thermal diffusivity
+    alpha_interface = alpha # set equal to cell because we are only interested in steady state
+    # print(alpha_interface)
     # First, calculate all dT/dx
     # forward difference for discretising derivative at left bounds
     dTdx_list[0] = (prev_temperatures_list[1] - prev_temperatures_list[0])/dx
@@ -47,18 +48,16 @@ def time_step_calc(cells_list, prev_temperatures_list):
     for cell_index, cell_location in enumerate(cells_list):
         #### EGEN FUNCTION HERE
         # calculating heat input: add heat gen, heat from peltier (for border cells), and subtract heat loss
-        heat_loss = calculate_heat_loss(prev_temperatures_list[cell_index])/dx # divide by dx because heat gen term should be in terms of W/m^3
-        if cell_index == 0:
-            egen = (Total_heat_gen/Thickness) - heat_loss # heat gen minus heat loss multiplied by dx to get discretised value, plus heat flux in
-            system_total_q += egen
-        elif cell_index == range(len(cells_list))[-1]:
+        if cell_location >= -Thickness/2 and cell_location <= Thickness/2:
+            # calculation for cell
+            heat_loss = calculate_heat_loss(prev_temperatures_list[cell_index])/dx # divide by dx because heat gen term should be in terms of W/m^3
             egen = (Total_heat_gen/Thickness) - heat_loss
-            system_total_q += egen
+            dTdt_list[cell_index] = alpha*(d2Tdx2_list[cell_index]+egen/k)
         else:
-            egen = (Total_heat_gen/Thickness) - heat_loss
-            system_total_q += egen
-        # print(egen)
-        dTdt_list[cell_index] = alpha*(d2Tdx2_list[cell_index]+egen/k)
+            # calculation for thermal interface
+            heat_loss = calculate_heat_loss(prev_temperatures_list[cell_index])/dx # divide by dx because heat gen term should be in terms of W/m^3
+            egen = (0) - heat_loss
+            dTdt_list[cell_index] = alpha_interface*(d2Tdx2_list[cell_index]+egen/Conductivity_interface)
         dTdt_list[0] = 0; dTdt_list[-1] = 0
         # dTdt_list[0] = 0; dTdt_list[-1] = 0 # commented out because this is only used for setting constant surface temperature
         new_temperature_list[cell_index] = prev_temperatures_list[cell_index] + dTdt_list[cell_index]*dt

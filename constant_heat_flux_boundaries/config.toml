@@ -5,13 +5,13 @@ n = 150                                 # number of discretised points in 1D, ch
 n_thermal_interface = 20                # number of discretised points of thermal interface in 1D, different value is used from cell because thermal interface is much thinner
 
 # Cell parameters
-Thickness = 0.01                        # m, thickness of cell to model; thickness = 2*L
+Thickness = 0.0114                        # m, thickness of cell to model; thickness = 2*L
 Specific_heat = 1000                    # J/(kg*K), specific heat of cell
 Conductivity = 0.5                      # W/(m*K), through-plane thermal conductivity of cell
 Density = 2000                          # kg/m^3, weight density; used to calculate diffusivity (diffusivity = conductivity/(density*specificheat))
 
 # Sensor parameters (and thermal interface material) (not used right now)
-Thermal_Interface_Thickness = 2         # mm, thickness of thermal interface material to model
+Thermal_Interface_Thickness = 0.002     # mm, thickness of thermal interface material to model
 Thermal_Interface_Conductivity = 1.4    # W/(m*K), conductivity of heat flux sensor and thermal interface material
 
 # Heat parameters
