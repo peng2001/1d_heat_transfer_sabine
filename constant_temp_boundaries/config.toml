@@ -1,8 +1,7 @@
 # Simulation Setup
-dt = 0.025                              # seconds, time step of simulation; if overflow error is occurring, use smaller dt
-total_time = 1000                      # seconds, total time simulated (choose large value for steady state simulation; make sure final dT/dt is very small)
-n = 150                                 # number of discretised points in 1D, choose around 200 or more for convergence
-n_thermal_interface = 20                # number of discretised points of thermal interface in 1D, different value is used from cell because thermal interface is much thinner
+dt = 0.01                              # seconds, time step of simulation; if overflow error is occurring, use smaller dt
+total_time = 1000                       # seconds, total time simulated (choose large value for steady state simulation; make sure final dT/dt is very small)
+n = 200                                 # number of discretised points in 1D, choose around 200 or more for convergence
 
 # Cell parameters
 Thickness = 0.01                        # m, thickness of cell to model; thickness = 2*L
@@ -12,7 +11,9 @@ Density = 2000                          # kg/m^3, weight density; used to calcul
 
 # Sensor parameters (and thermal interface material)
 Thermal_Interface_Thickness = 0.0005    # m, thickness of thermal interface material to model
-Thermal_Interface_Conductivity = 1.4    # W/(m*K), conductivity of heat flux sensor and thermal interface material
+Thermal_Interface_Specific_heat = 100   # J/(kg*K), not used for steady state calculations
+Thermal_Interface_Conductivity = 1.2    # W/(m*K), conductivity of heat flux sensor and thermal interface material
+Thermal_Interface_Density = 1790        # kg/m^3, , not used for steady state calculations
 
 # Heat parameters
 Temperature_initial = 25                # Deg C, uniform starting temperature of cell and boundaries

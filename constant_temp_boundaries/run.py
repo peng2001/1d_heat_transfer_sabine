@@ -13,7 +13,9 @@ def graphing_steady_state(temperatures_list, time_record, cells_list):
     ax = fig.add_subplot(111)
     ax.plot(x[-1], temperature_data[-1])
     # Adding axis labels
-    ax.set_xlabel('x (mm)')
+    ax.axvline(x=-Thickness/2, linestyle='--')
+    ax.axvline(x=Thickness/2, linestyle='--')
+    ax.set_xlabel('x (m)')
     ax.set_ylabel('Steady State Temperature (Degres C)')
     ax.set_title('1D Temperature')
     plt.show()
@@ -39,15 +41,15 @@ def graphing_transient_2D(temperatures_list, time_record, cells_list): # graphs 
     x = np.array(cells_list)
     t = np.array(time_record)
     temperature_data = np.array(temperatures_list)
-    left_surface_temperature = [sublist[0] for sublist in temperature_data]
+    middle_temperature = [sublist[len(sublist)//2] for sublist in temperature_data]
     # Plotting the data
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.plot(t, left_surface_temperature)
+    ax.plot(t, middle_temperature)
     # Adding axis labels
     ax.set_xlabel('Time (s)')
     ax.set_ylabel('Temperature (Degrees C)')
-    ax.set_title('Temperature of Left Surface of Cell')
+    ax.set_title('Temperature of Centre of Cell')
     plt.show()
 
 def calculate_max_dTdt(temperatures_list):
